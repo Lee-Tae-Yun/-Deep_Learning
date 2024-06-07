@@ -15,7 +15,7 @@ class SLP:
     def predict(self, x):
         return self.activation(np.dot(x, self.weights) + self.bias)
 
-    def train(self, x_train, y_train, epochs=100, learning_rate=0.1):
+    def train(self, x_train, y_train, epochs=300, learning_rate=0.1):
         for epoch in range(epochs):
             for i in range(len(x_train)):
                 y_pred = self.predict(x_train[i])
