@@ -28,12 +28,12 @@ class MLP:
         self.hidden_layer_conf = hidden_layer_conf
         self.num_output_nodes = num_output_nodes
         self.logic_op_model = None
-        self.build_model()  # 모델 구축 메서드 호출
+        self.build_model()
 
     def build_model(self):
         input_layer = tf.keras.Input(shape=[2, ])
         hidden_layers = input_layer
-        # 은닉층 수를 2로 고정
+
         for _ in range(2):
             hidden_layers = tf.keras.layers.Dense(units=self.hidden_layer_conf[0],
                                                   activation=tf.keras.activations.sigmoid,
@@ -59,25 +59,21 @@ def SLP_CircleClassify():
     n_samples = 400
     noise = 0.02
     factor = 0.5
-    #### x_train (특징 벡터), y_train (클래스 ground truth)를 훈련 세트로 사용
     x_train, y_train = make_circles(n_samples=n_samples, noise=noise, factor=factor)
-    #### x_test (특징 벡터)를 테스트 세트로 사용
-    #### 이 과제에서는 y_test를 사용하지 않습니다.
     x_test, y_test = make_circles(n_samples=n_samples, noise=noise, factor=factor)
 
-    #### 훈련 데이터 분포 시각화
     plt.scatter(x_train[:, 0], x_train[:, 1], c=y_train, marker='.')
     plt.title("Train data distribution")
     plt.show()
 
-    ############ SLP 분류기 훈련 ############
+    # SLP 분류기 훈련
     slp = SLP(input_dim=2)
     slp.train(x_train, y_train)
 
-    ############ SLP 분류기 테스트 ############
+    # SLP 분류기 테스트
     predictions = [slp.predict(x) for x in x_test]
 
-    #### 테스트 데이터 분류 시각화
+    # 테스트 데이터 분류 시각화
     plt.scatter(x_test[:, 0], x_test[:, 1], c=predictions, marker='.')
     plt.title("SLP prediction results")
     plt.show()
